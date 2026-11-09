@@ -65,9 +65,6 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = input.y;
 
         //when to jump
-        print("grounded: " + grounded);
-        print("readyToJump: " + readyToJump);
-        print("jump action pressed: " + jump.action.IsPressed());
         if (grounded && readyToJump && jump.action.IsPressed())
         {
             readyToJump = false;
