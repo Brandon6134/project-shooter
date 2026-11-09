@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] InputActionReference movementInput;
-    [SerializeField] InputActionReference jump;
+    private Vector2 moveInput;
     public float moveSpeed;
     public float groundDamping;
 
@@ -43,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
         //the length of the raycast is half your player's height, since raycast is from middle point of player, then plus a bit more (~0.2f)
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight*0.5f + 0.2f, ground);
 
-        ReadPlayerInput();
         SpeedControl();
 
         //handle damping / drag
@@ -58,25 +56,15 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
-    private void ReadPlayerInput()
+    void OnMove(InputValue value)
     {
-        Vector2 input = movementInput.action.ReadValue<Vector2>();
-        horizontalInput = input.x;
-        verticalInput = input.y;
-
-        //when to jump
-        if (grounded && readyToJump && jump.action.IsPressed())
-        {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump),jumpCooldown); //call reset jump to set readyToJump = true, after xx seconds of jump cooldown
-        }
+        moveInput = value.Get<Vector2>();
     }
 
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x;
 
         //on ground
         if (grounded)
@@ -99,13 +87,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     
-    private void Jump()
+    private void OnJump()
     {
-        //reset y velocity, so always jump same height
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x,0f,rb.linearVelocity.z);
+        //when to jump
+        if (grounded && readyToJump)
+        {
+            readyToJump = false;
 
-        //apply force (impulse cause only apply the force in one instance)
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            //reset y velocity, so always jump same height
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x,0f,rb.linearVelocity.z);
+
+            //apply force (impulse cause only apply the force in one instance)
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            
+            Invoke(nameof(ResetJump),jumpCooldown); //call reset jump to set readyToJump = true, after xx seconds of jump cooldown
+        }
     }
 
     private void ResetJump()
