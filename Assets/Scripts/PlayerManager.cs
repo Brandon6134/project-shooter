@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class DestroyAfterTime : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
-    public float time;
+    public static GameObject Player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        Destroy(gameObject,time);
+        Player = gameObject;
     }
 }

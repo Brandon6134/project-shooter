@@ -20,7 +20,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        Vector3 spawnPos = new Vector3(Random.Range(-5,5),1.7f,Random.Range(-5,5));
+        Vector3 spawnPos = new Vector3(Random.Range(-15,15),1.7f,Random.Range(-15,15));
         enemyPools[0].Spawn(spawnPos);
     }
 }

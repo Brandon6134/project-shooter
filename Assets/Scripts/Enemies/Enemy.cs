@@ -5,19 +5,29 @@ public class Enemy : MonoBehaviour
 {
     public float definedHealth = 10f;
     protected float activeHealth;
+    private Rigidbody rb;
+    private Transform playerTransform;
 
     private Pool enemyPool;
+    public float chaseSpeed = 2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         activeHealth = definedHealth;
         enemyPool = transform.parent.GetComponent<Pool>(); //gain access to the enemy pool when initailzed
+        playerTransform = PlayerManager.Player.transform; //gain access to player transform when initialized
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void FixedUpdate()
+    {
+        ChasePlayer();
     }
 
     public void TakeDamage(int damage)
@@ -32,5 +42,11 @@ public class Enemy : MonoBehaviour
     {
         enemyPool.Despawn(gameObject);
         activeHealth = definedHealth;
+    }
+
+    public void ChasePlayer()
+    {
+        Vector3 chaseDirection = (playerTransform.position - transform.position).normalized;
+        rb.MovePosition(rb.position + chaseDirection * chaseSpeed * Time.fixedDeltaTime);
     }
 }
