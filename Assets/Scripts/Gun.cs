@@ -11,6 +11,11 @@ public class Gun : MonoBehaviour
     public GameObject bullet;
     public Transform bulletSpawnPoint;
 
+    public GameObject weaponFlash;
+
+    public float recoilDistance = 0.1f;
+    public float recoilSpeed = 15f;
+
     private int currentAmmo;
     private bool isReloading = false;
     private float nextTimeToFire = 0f;
@@ -42,6 +47,10 @@ public class Gun : MonoBehaviour
         currentAmmo--;
 
         Instantiate(bullet,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
+        //Instantiate(weaponFlash,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
+
+        StopCoroutine(nameof(Recoil));
+        StartCoroutine(nameof(Recoil));
     }
 
     IEnumerator Reload()
@@ -55,7 +64,7 @@ public class Gun : MonoBehaviour
         while(t < halfReload) //rotate gun from initial angle to rotated angle
         {
             t += Time.deltaTime;
-            transform.localRotation = Quaternion.Slerp(targetRotation,initialRotation, t / halfReload);
+            transform.localRotation = Quaternion.Slerp(initialRotation,targetRotation, t / halfReload);
             yield return null; //wait 1 frame
         }
 
@@ -64,7 +73,7 @@ public class Gun : MonoBehaviour
         while(t < halfReload) //rotate angle back from titled angle to initial angle
         {
             t += Time.deltaTime;
-            transform.localRotation = Quaternion.Slerp(initialRotation, targetRotation, t / halfReload);
+            transform.localRotation = Quaternion.Slerp(targetRotation,initialRotation, t / halfReload);
             yield return null; //wait 1 frame
         }
 
@@ -78,5 +87,29 @@ public class Gun : MonoBehaviour
         if (currentAmmo == magSize) return;
 
         StartCoroutine(Reload());
+    }
+
+    private IEnumerator Recoil()
+    {
+        Vector3 recoilTarget = initialPosition + new Vector3(0,0,-recoilDistance);
+        float t = 0;
+
+        while(t < 1) //rotate gun from initial angle to rotated angle
+        {
+            t += Time.deltaTime*recoilSpeed;
+            transform.localPosition = Vector3.Lerp(initialPosition,recoilTarget, t);
+            yield return null; //wait 1 frame
+        }
+
+        t = 0;
+
+        while(t < 1) //rotate gun from initial angle to rotated angle
+        {
+            t += Time.deltaTime*recoilSpeed;
+            transform.localPosition = Vector3.Lerp(recoilTarget,initialPosition, t);
+            yield return null; //wait 1 frame
+        }
+
+        transform.localPosition = initialPosition;
     }
 }

@@ -20,11 +20,6 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask ground;
     bool grounded;
 
-    public Transform orientation;
-
-    float horizontalInput;
-    float verticalInput;
-
     Vector3 moveDirection;
 
     Rigidbody rb;
@@ -64,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x;
+        moveDirection = transform.forward * moveInput.y + transform.right * moveInput.x;
 
         //on ground
         if (grounded)
