@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using System;
 
 public class Gun : MonoBehaviour
 {
+    
     public float reloadTime = 1f;
     public float fireRate = 0.15f;
     public int magSize = 8;
@@ -16,7 +18,9 @@ public class Gun : MonoBehaviour
     public float recoilDistance = 0.1f;
     public float recoilSpeed = 15f;
 
+    [Header("Ammo")]
     private int currentAmmo;
+    public int reserveAmmo = 30;
     private bool isReloading = false;
     private float nextTimeToFire = 0f;
 
@@ -30,6 +34,8 @@ public class Gun : MonoBehaviour
         currentAmmo = magSize;
         initialRotation = transform.localRotation;
         initialPosition = transform.localPosition;
+
+        HUDManager.Instance.UpdateAmmoCounter(currentAmmo,reserveAmmo);
     }
 
     public void Shoot()
@@ -37,7 +43,10 @@ public class Gun : MonoBehaviour
         if (isReloading) return; //if reloading cannot shoot
         if (Time.time < nextTimeToFire) return; //if in shooting cooldown, dont shoot
 
-        if (currentAmmo <= 0)
+        if (currentAmmo==0 && reserveAmmo==0) //if has no ammo at all, don't shoot or reload
+            return;
+
+        if (currentAmmo <= 0) //if out of ammo in mag
         {
             StartCoroutine(Reload());
             return;
@@ -45,6 +54,8 @@ public class Gun : MonoBehaviour
 
         nextTimeToFire = Time.time + fireRate;
         currentAmmo--;
+
+        HUDManager.Instance.UpdateAmmoCounter(currentAmmo,reserveAmmo);
 
         Instantiate(bullet,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
         //Instantiate(weaponFlash,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
@@ -77,7 +88,16 @@ public class Gun : MonoBehaviour
             yield return null; //wait 1 frame
         }
 
-        currentAmmo = magSize;
+        int oldReserveAmmo = reserveAmmo;
+        reserveAmmo = Mathf.Max(reserveAmmo - (magSize - currentAmmo),0); //if total ammo < 0, sets to 0
+
+        if(reserveAmmo + currentAmmo < magSize)
+            currentAmmo+=oldReserveAmmo;
+        else
+            currentAmmo = magSize;
+        
+        HUDManager.Instance.UpdateAmmoCounter(currentAmmo,reserveAmmo);
+
         isReloading = false;
     }
 
@@ -85,6 +105,7 @@ public class Gun : MonoBehaviour
     {
         if (isReloading) return;
         if (currentAmmo == magSize) return;
+        if (reserveAmmo == 0) return;
 
         StartCoroutine(Reload());
     }
