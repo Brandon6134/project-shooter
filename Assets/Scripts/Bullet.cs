@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 15f;
     public float lifeTime = 3f;
+    public int damageDealt = 2;
 
     private Rigidbody rb;
 
@@ -17,6 +18,10 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.GetComponent<Hitbox>())
+        {
+            collision.gameObject.GetComponent<Hitbox>().CallTakeDamage(damageDealt);
+        }
         Destroy(gameObject);
     }
 }
