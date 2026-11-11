@@ -15,8 +15,13 @@ public class Enemy : MonoBehaviour
     {
         activeHealth = definedHealth;
         enemyPool = transform.parent.GetComponent<Pool>(); //gain access to the enemy pool when initailzed
-        playerTransform = PlayerManager.Player.transform; //gain access to player transform when initialized
+        
         rb = GetComponent<Rigidbody>();
+    }
+    
+    void Start()
+    {
+        playerTransform = PlayerManager.Player.transform; //gain access to player transform when initialized
     }
 
     // Update is called once per frame

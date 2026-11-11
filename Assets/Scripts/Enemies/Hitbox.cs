@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Hitbox : MonoBehaviour
 {
@@ -16,8 +17,11 @@ public class Hitbox : MonoBehaviour
         
     }
 
-    public void CallTakeDamage(int damage)
+    public void CallTakeDamage(int damage, bool useDamageMultiplier)
     {
-        enemy.TakeDamage(damage*damageMulitplier);
+        if(useDamageMultiplier)
+            enemy.TakeDamage(damage*damageMulitplier);
+        else
+            enemy.TakeDamage(damage);
     }
 }

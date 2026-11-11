@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
     {
         if(collision.collider.gameObject.GetComponent<Hitbox>())
         {
-            collision.collider.gameObject.GetComponent<Hitbox>().CallTakeDamage(damageDealt);
+            collision.collider.gameObject.GetComponent<Hitbox>().CallTakeDamage(damageDealt,true);
         }
         Destroy(gameObject);
     }

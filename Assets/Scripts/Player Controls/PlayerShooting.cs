@@ -32,14 +32,4 @@ public class PlayerShooting : MonoBehaviour
         if(isHoldingShoot && gun != null)
             gun.Shoot();
     }
-
-    void FixedUpdate()
-    {
-        
-    }
-
-    void ReadPlayerInput()
-    {
-        
-    }
 }
