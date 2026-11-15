@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Hitbox : MonoBehaviour
 {
-    public Enemy enemy;
+    public CharacterEntity character;
     public int damageMulitplier;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,8 +20,8 @@ public class Hitbox : MonoBehaviour
     public void CallTakeDamage(int damage, bool useDamageMultiplier)
     {
         if(useDamageMultiplier)
-            enemy.TakeDamage(damage*damageMulitplier);
+            character.TakeDamage(damage*damageMulitplier);
         else
-            enemy.TakeDamage(damage);
+            character.TakeDamage(damage);
     }
 }

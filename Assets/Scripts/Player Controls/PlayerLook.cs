@@ -1,3 +1,4 @@
+using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,18 +9,27 @@ public class PlayerLook : MonoBehaviour
     public Transform gun;
 
     private float xRotation = 0f;
+    private float yRotation = 0f;
     private Vector2 lookInput;
+    private Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; //cursor stays at center of screen
         Cursor.visible = false;
+
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleMouseLook();
+    }
+
+    void LateUpdate()
+    {
+        rb.MoveRotation(Quaternion.Euler(0f,yRotation,0f));
     }
 
     public void OnLook(InputValue value)
@@ -35,8 +45,10 @@ public class PlayerLook : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation,-90,90);
 
+        yRotation += mouseX;        
+
         cam.localRotation = Quaternion.Euler(xRotation,0f,0f);
 
-        transform.Rotate(Vector3.up * mouseX);
+        //transform.Rotate(Vector3.up * mouseX);
     }
 }

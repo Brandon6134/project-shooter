@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3776186665590436932}
-  - component: {fileID: 8002452385259776532}
   - component: {fileID: 8844584367538153589}
-  m_Layer: 0
+  - component: {fileID: 2810624621774107565}
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,22 +33,9 @@ Transform:
   m_Children:
   - {fileID: 8908940606897429869}
   - {fileID: 9087647479682980628}
+  - {fileID: 5190598431618528880}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8002452385259776532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346910851408780109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7be90d1f40cc9d42bf7191641865122, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  definedHealth: 10
-  chaseSpeed: 2
 --- !u!54 &8844584367538153589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -57,7 +44,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346910851408780109}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -73,9 +60,27 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!114 &2810624621774107565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346910851408780109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 773112607333e7e41ad28bcdaf5dae15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RegularZombie
+  definedHealth: 10
+  chaseSpeed: 2
+  meshRenderers:
+  - {fileID: 9163403319162359737}
+  - {fileID: 7443308720446350558}
+  melee: {fileID: 5890388518757350662}
 --- !u!1 &2495727666189085842
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,8 +93,8 @@ GameObject:
   - component: {fileID: 8205792395253961255}
   - component: {fileID: 9163403319162359737}
   - component: {fileID: 3133641094697203035}
-  - component: {fileID: 4660185077954112512}
-  m_Layer: 0
+  - component: {fileID: 6739909786507971604}
+  m_Layer: 8
   m_Name: Head
   m_TagString: Head Hitbox
   m_Icon: {fileID: 0}
@@ -189,7 +194,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4660185077954112512
+--- !u!114 &6739909786507971604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0094f87f6d68534b8f13df9bee45ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
-  enemy: {fileID: 8002452385259776532}
+  character: {fileID: 2810624621774107565}
   damageMulitplier: 2
 --- !u!1 &5462197537244860482
 GameObject:
@@ -215,8 +220,8 @@ GameObject:
   - component: {fileID: 6443854180535733267}
   - component: {fileID: 7443308720446350558}
   - component: {fileID: 8881470449885972030}
-  - component: {fileID: 6903822601717745445}
-  m_Layer: 0
+  - component: {fileID: 6953391949356343561}
+  m_Layer: 8
   m_Name: Body
   m_TagString: Body Hitbox
   m_Icon: {fileID: 0}
@@ -316,7 +321,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6903822601717745445
+--- !u!114 &6953391949356343561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,5 +333,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0094f87f6d68534b8f13df9bee45ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
-  enemy: {fileID: 8002452385259776532}
+  character: {fileID: 2810624621774107565}
   damageMulitplier: 1
+--- !u!1001 &1883347045316819071
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3776186665590436932}
+    m_Modifications:
+    - target: {fileID: 4783217742292350304, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 346910851408780109}
+    - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: attackSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: attackCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: layerToHit.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.024
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.76710004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.799
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6440599648175510709, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_Name
+      value: Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 6440599648175510709, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+--- !u!4 &5190598431618528880 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5920628141422906895, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+  m_PrefabInstance: {fileID: 1883347045316819071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5890388518757350662 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+  m_PrefabInstance: {fileID: 1883347045316819071}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35485a8ebae023546b3b72492b7ce6cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Melee

@@ -13,6 +13,7 @@ public class Melee : MonoBehaviour
     bool attacking = false;
     bool readyToAttack = true;
     [SerializeField] GameObject cam;
+    [SerializeField] LayerMask layerToHit;
 
     private Vector3 initialPosition;
     public Vector3 hitPositionOffset = new Vector3 (0,0,1);
@@ -42,12 +43,12 @@ public class Melee : MonoBehaviour
         Invoke(nameof(ResetAttack),attackCooldown);
         Invoke(nameof(AttackRayCast),attackSpeed);
 
-
     }
 
     void AttackRayCast()
     {
-        if (Physics.Raycast(cam.transform.position,cam.transform.forward, out RaycastHit hit, attackDistance))
+        Debug.DrawRay(cam.transform.position,cam.transform.forward*attackDistance,Color.red,2f);
+        if (Physics.Raycast(cam.transform.position,cam.transform.forward, out RaycastHit hit, attackDistance,layerToHit))
         {
             Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
             if (hitbox)
@@ -64,7 +65,7 @@ public class Melee : MonoBehaviour
     IEnumerator KnifeAnimation()
     {
         Vector3 targetPosition = initialPosition + hitPositionOffset;
-        float halfAttackTime = attackSpeed / 2;
+        float halfAttackTime = attackSpeed * 2;
         float t = 0f;
 
         while(t < halfAttackTime) //rotate gun from initial angle to rotated angle
