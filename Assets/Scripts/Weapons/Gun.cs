@@ -27,6 +27,9 @@ public class Gun : MonoBehaviour
     private Quaternion initialRotation;
     private Vector3 initialPosition;
     private Vector3 reloadRotationOffset = new Vector3 (60,50,50);
+
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -59,6 +62,7 @@ public class Gun : MonoBehaviour
 
         Instantiate(bullet,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
         //Instantiate(weaponFlash,bulletSpawnPoint.position,bulletSpawnPoint.rotation);
+        AudioManager.Instance.PlaySFX(shootSound,0.4f,true);
 
         StopCoroutine(nameof(Recoil));
         StartCoroutine(nameof(Recoil));
@@ -71,6 +75,8 @@ public class Gun : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(initialRotation.eulerAngles + reloadRotationOffset);
         float halfReload = reloadTime / 2f;
         float t = 0f;
+
+        AudioManager.Instance.PlaySFX(reloadSound,0.7f,true);
 
         while(t < halfReload) //rotate gun from initial angle to rotated angle
         {
