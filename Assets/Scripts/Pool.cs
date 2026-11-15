@@ -25,6 +25,15 @@ public class Pool : MonoBehaviour
         return prefabObject;
     }
 
+    public GameObject SpawnText(Vector2 targetSpawnPos)
+    {
+        GameObject prefabObject = pool.Dequeue();
+        prefabObject.SetActive(true);
+
+        prefabObject.GetComponent<RectTransform>().anchoredPosition = targetSpawnPos;
+        return prefabObject;
+    }
+
     public void Despawn(GameObject prefabObject)
     {
         prefabObject.SetActive(false);

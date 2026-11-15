@@ -81,6 +81,7 @@ MonoBehaviour:
   - {fileID: 9163403319162359737}
   - {fileID: 7443308720446350558}
   melee: {fileID: 5890388518757350662}
+  timeDelayBeforeAttack: 0.3
 --- !u!1 &2495727666189085842
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +354,7 @@ PrefabInstance:
       objectReference: {fileID: 346910851408780109}
     - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
       propertyPath: attackSpeed
-      value: 0.25
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
       propertyPath: attackCooldown
