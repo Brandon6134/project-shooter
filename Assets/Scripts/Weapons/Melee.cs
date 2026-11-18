@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityPipeline.Microsoft.CodeAnalysis.Operations;
 
 public class Melee : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Melee : MonoBehaviour
 
     private Vector3 initialPosition;
     public Vector3 hitPositionOffset = new Vector3 (0,0,1);
+    public AudioClip swingKnifeSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,6 +41,9 @@ public class Melee : MonoBehaviour
 
         StopCoroutine(KnifeAnimation());
         StartCoroutine(KnifeAnimation());
+
+        if(swingKnifeSound)
+            AudioManager.Instance.PlaySFX(swingKnifeSound,0.6f,true);
 
         Invoke(nameof(ResetAttack),attackCooldown);
         Invoke(nameof(AttackRayCast),attackSpeed);

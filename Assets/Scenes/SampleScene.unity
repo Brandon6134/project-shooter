@@ -706,6 +706,10 @@ PrefabInstance:
       value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
+      propertyPath: swingKnifeSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 64d80a15d1e2f594aabc4c49f570ce71, type: 3}
+    - target: {fileID: 5448268196432954745, guid: c1ab9abedc9d80f4a9109fe99b4ea8d4, type: 3}
       propertyPath: layerToHit.m_Bits
       value: 256
       objectReference: {fileID: 0}
@@ -1569,10 +1573,15 @@ MonoBehaviour:
   jumpForce: 15
   jumpCooldown: 0.25
   airMultiplier: 0.75
-  playerHeight: 2
+  playerHeight: 1
   ground:
     serializedVersion: 2
     m_Bits: 64
+  footstepSounds:
+  - {fileID: 8300000, guid: 19090b6982d50294c8223474ca45dcb1, type: 3}
+  - {fileID: 8300000, guid: 0eaa883feda1b7e47890d3095c401263, type: 3}
+  landingSound: {fileID: 8300000, guid: 45bd24a7665e9554e9bfca34bf501792, type: 3}
+  stepInterval: 0.5
 --- !u!114 &1260628656
 MonoBehaviour:
   m_ObjectHideFlags: 0
